@@ -1,4 +1,4 @@
-<!-- confirm("");弹出确认框，确定返回TRUE，取消发挥FALSE;
+confirm("");弹出确认框，确定返回TRUE，取消发挥FALSE;
 
 jq获取回车事件
 document.onkeydown=function(e){
@@ -136,5 +136,12 @@ push() 方法可向数组的末尾添加一个或多个元素，并返回新的�
 trigger() 方法触发被选元素的指定事件类型。
 function x(){} 函数声明
 var x= function(){} 函数表达式
- -->
 
+javascript之url转义escape()、encodeURI()和decodeURI()
+
+encodeURI()　　//转义一个URI中的字符
+decodeURI()　　//解码一个URI中的字符
+encodeURIComponent()　　//转义URI组件中的字符
+decodeURIComponent()　　//解码一个URI组件中的字符
+escape()　　//编码一个字符串
+unecape()　　//解码一个由escape()函数编码的字符串
