@@ -131,6 +131,9 @@ for(var item in arr){
 js数组初始化的方式
 var arrayname=new Array();
 var arrayname=[];
+if( Array.isArray(value) ){
+    console.log( 'value is array' );
+}
 
 push() 方法可向数组的末尾添加一个或多个元素，并返回新的长度。
 trigger() 方法触发被选元素的指定事件类型。
