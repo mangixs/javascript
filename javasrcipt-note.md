@@ -148,3 +148,23 @@ encodeURIComponent()　　//转义URI组件中的字符
 decodeURIComponent()　　//解码一个URI组件中的字符
 escape()　　//编码一个字符串
 unecape()　　//解码一个由escape()函数编码的字符串
+
+倒计时
+function timer(intDiff) {
+    window.setInterval(function() {
+        var day = 0, hour = 0, minute = 0, second = 0;
+        if (intDiff > 0) {
+            day = Math.floor(intDiff / (60 * 60 * 24));
+            hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+            minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+            second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+        }
+        if (minute <= 9)
+            minute = '0' + minute;
+        if (second <= 9)
+            second = '0' + second;
+        
+        $('#span_time_diff').html(day + '天' + hour + '时' + minute + '分' + second + '秒');
+        intDiff--;
+    }, 1000);
+}
