@@ -29,16 +29,16 @@ function myrefresh()
    window.location.reload();
 }
 setTimeout('myrefresh()',1000); //指定1秒刷新一次
-</script>
+
 javascript刷新页面的集中方法
-1，history.go(0) 
-2，location.reload() 
-3，location=location 
-4，location.assign(location) 
-5，document.execCommand('Refresh') 
-6，window.navigate(location) 
-7，location.replace(location) 
-8，document.URL=location.href
+history.go(0) 
+location.reload() 
+location=location 
+location.assign(location) 
+document.execCommand('Refresh') 
+window.navigate(location) 
+location.replace(location) 
+document.URL=location.href
 
 关闭页面的方法
 window.close()
@@ -168,3 +168,19 @@ function timer(intDiff) {
         intDiff--;
     }, 1000);
 }
+//ajax跨域
+//
+//header('Access-Control-Allow-Origin：* '); 一中方法
+//
+//jQuery插件-jquery-jsonp。
+//var url="http://localhost:8080/WorkGroupManagment/open/getGroupById"
+//     +"?id=1&callback=?";
+// $.jsonp({
+//   "url": url,
+//   "success": function(data) {
+//     $("#current-group").text("当前工作组:"+data.result.name);
+//   },
+//   "error": function(d,msg) {
+//     alert("Could not find user "+msg);
+//   }
+// });
