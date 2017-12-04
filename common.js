@@ -444,3 +444,206 @@ function stringfyQueryString(obj) {
 
     return pairs.join('&');
 }
+// 数组对比
+function diff_array(arr1, arr2) {
+    var arr3 = [];
+    for (var i = 0; i < arr1.length; i++) {
+        var flag = true;
+        for (var j = 0; j < arr2.length; j++) {
+            if (arr2[j] == arr1[i]) {
+                flag = false;
+            }
+        }
+        if (flag) {
+            arr3.push(arr1[i]);
+        }
+    }
+    return arr3;
+}
+
+//笛卡儿积组合
+function descartes(list, specData) {
+    var point = {};
+    var result = [];
+    var pIndex = null;
+    var tempCount = 0;
+    var temp = [];
+    for (var index in list) {
+        if (typeof list[index] == 'object') {
+            point[index] = {
+                'parent': pIndex,
+                'count': 0
+            }
+            pIndex = index;
+        }
+    }
+    if (pIndex == null) {
+        return list;
+    }
+    while (true) {
+        for (var index in list) {
+            tempCount = point[index]['count'];
+            temp.push({
+                "id": specData[index].id,
+                "name": specData[index].name,
+                "style": specData[index].style,
+                "color": list[index][tempCount].color,
+                "img": list[index][tempCount].img,
+                "value": list[index][tempCount].value
+            });
+        }
+        result.push(temp);
+        temp = [];
+        while (true) {
+            if (point[index]['count'] + 1 >= list[index].length) {
+                point[index]['count'] = 0;
+                pIndex = point[index]['parent'];
+                if (pIndex == null) {
+                    return result;
+                }
+                index = pIndex;
+            } else {
+                point[index]['count']++;
+                break;
+            }
+        }
+    }
+}
+/**
+ * 替换URL目标参数值
+ * @param  {string} arg 参数名
+ * @param  {string} val 参数值
+ * @param  {string} url 目标地址
+ * @return {string}
+ */
+function replaceParamVal(arg, val, url) {
+    url = url || this.location.href.toString();
+    var pattern = arg + '=([^&]*)';
+    var replaceText = arg + '=' + val;
+    if (url.match(pattern)) {
+        var tmp = '/(' + arg + '=)([^&]*)/gi';
+        tmp = url.replace(eval(tmp), replaceText);
+        return tmp;
+    } else {
+        if (url.match('[\?]')) {
+            return url + '&' + replaceText;
+        } else {
+            return url + '?' + replaceText;
+        }
+    }
+    return url + '\n' + arg + '\n' + val;
+}
+//匹配Email地址
+function isEmail(str){
+    if(!str.match(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)) return "请输入正确的邮箱地址！";
+}
+
+//只能输入数字[0-9]
+function isDigits(str){
+    if(!str.match(/^\d+$/)) return "请输入数字！";
+}
+
+//匹配mobile
+function isMobile(str){
+    if(!str.match(/^((\(\d{2,3}\))|(\d{3}\-))?((13\d{9})|(15\d{9})|(18\d{9}))$/)) return "请输入正确的手机号码格式！";
+}
+
+//以字母开头
+function isFirstEnglish(str){
+    if(!str.match(/^[a-zA-Z]/)) return "必须以字母为开头！";
+}
+
+//判断是否为合法字符(a-zA-Z0-9-_)字母，数字，下划线
+function isRightfulString(str){
+    if(str==null||str=="") return false;
+    var result=str.match(/^[A-Za-z0-9_-]+$/);
+    if(result==null)return false;
+    return true;
+}
+
+//匹配身份证号码
+function istrCard(str){
+    var aCity = { 11: "北京", 12: "天津", 13: "河北", 14: "山西", 15: "内蒙古", 21: "辽宁", 22: "吉林", 23: "黑龙江 ", 31: "上海", 32: "江苏", 33: "浙江", 34: "安徽", 35: "福建", 36: "江西", 37: "山东", 41: "河南", 42: "湖北 ", 43: "湖南", 44: "广东", 45: "广西", 46: "海南", 50: "重庆", 51: "四川", 52: "贵州", 53: "云南", 54: "西藏 ", 61: "陕西", 62: "甘肃", 63: "青海", 64: "宁夏", 65: "新疆", 71: "台湾", 81: "香港", 82: "澳门", 91: "国外 " }
+
+    var iSum = 0;
+    var info = "";
+    str = str.replace(/x$/i, "a");
+    if (aCity[parseInt(str.substr(0, 2))] == null) return "非法地区";
+    sBirthday = str.substr(6, 4) + "-" + Number(str.substr(10, 2)) + "-" + Number(str.substr(12, 2));
+    var d = new Date(sBirthday.replace(/-/g, "/"))
+    if (sBirthday != (d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate())) return "非法生日";
+    for (var i = 17; i >= 0; i--) iSum += (Math.pow(2, i) % 11) * parseInt(str.charAt(17 - i), 11)
+    if (iSum % 11 != 1) return "非法证号";
+    //str.substr(16, 1) % 2 ? "男" : "女"//获取身份证性别
+}
+
+//字符串长度
+function israngeLength(str,para){
+    var paraName = para.split(",");
+    if(str.length<parseInt(paraName[0])||str.length>parseInt(paraName[1])){
+        return "字符长度必须是"+paraName[0]+"到"+paraName[1]+"之间！";
+    }
+}
+
+//数值范围0-10
+function isnumRange(str,para){
+    var paraName = para.split(",");
+    if(str<paraName[0]||str>paraName[1]){
+        return "","数值范围必须是"+paraName[0]+"到"+paraName[1]+"之间！";
+    }
+}
+
+//URL
+function isUrl(str){
+    if(!str.match(/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\’:+!]*([^<>\"])*$/)){
+        return "请输入正确的url地址,必须以http://开头！"
+    }
+}
+
+//整数
+function isInteger(str){
+    if(!str.match(/^[-\+]?\d+$/)) return "请输入整数！";
+}
+
+//浮点数
+function isDoubleNum(str){
+    if(!str.match(/^[-\+]?\d+(\.\d+)?$/)) return "请输入浮点数！";
+}
+
+//字符串最大长度
+function isMaxLength(str,para){
+    if(str.length>para) return "不能超过"+para+"字符！";
+}
+
+//字符串最小长度
+function isMinLength(str,para){
+    if(str.length<para) return "不能少于"+para+"字符！";
+}
+
+//必须输入英文
+function isEnglish(str){
+    if(!str.match(/^[A-Za-z]+$/)) return "请输入英文，不区分大小写！";
+}
+
+//必须输入中文
+function isChineseChar(str){
+    if(!str.match(/^[\u0391-\uFFE5]+$/)) return "请输入中文！";
+}
+
+//判断是否包含中英文特殊字符，除英文"-_"字符外
+function isSpecialChar(str){
+    var reg = RegExp(/[(\ )(\`)(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\+)(\=)(\|)(\{)(\})(\')(\:)(\;)(\')(',)(\[)(\])(\.)(\<)(\>)(\/)(\?)(\~)(\！)(\@)(\#)(\￥)(\%)(\…)(\&)(\*)(\（)(\）)(\—)(\+)(\|)(\{)(\})(\【)(\】)(\‘)(\；)(\：)(\”)(\“)(\’)(\。)(\，)(\、)(\？)]+/);
+    if(reg.test(str)) return "不能输入特殊字符！";
+}
+
+//日期验证 2015-9-6
+function isDate1(str,para){
+    var dateformat = /^[0-9]{4}-[0-1]?[0-9]{1}-[0-3]?[0-9]{1}$/;
+    if(!dateformat.test(str)) return "请输入正确的日期格式！"
+}
+
+//日期验证 2015/9/6
+function isDate2(str,para){
+    var dateformat = /^[0-9]{4}[/][0-1]?[0-9]{1}[/][0-3]?[0-9]{1}$/;
+    if(!dateformat.test(str)) return "请输入正确的日期格式！"
+}
