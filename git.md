@@ -9,6 +9,7 @@ git config --global color.diff auto
 git config --global color.branch auto
 git config --global color.interactive auto
 git config --global --unset http.proxy                    # remove  proxy configuration on git
+ssh-keygen -t rsa -C "youremail@example.com"			  #创建key	
 git clone git+ssh://git@192.168.53.168/VT.git             # clone远程仓库
 git status                                                # 查看当前版本状态（是否修改）
 git add xyz                                               # 添加xyz文件至index
