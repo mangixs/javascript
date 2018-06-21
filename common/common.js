@@ -1,4 +1,4 @@
- /* 
+/* 
  * @desc   为元素添加class
  * @param  {HTMLElement} ele 
  * @param  {String} cls 
@@ -7,6 +7,16 @@ function addClass(ele, cls) {
     if (!hasClass(ele, cls)) {
         ele.className += ' ' + cls;
     }
+}
+/**
+ * 
+ * @desc 判断元素是否有某个class
+ * @param {HTMLElement} ele 
+ * @param {String} cls 
+ * @return {Boolean}
+ */
+function hasClass(ele, cls) {
+    return (new RegExp('(\\s|^)' + cls + '(\\s|$)')).test(ele.className);
 }
 /**
  * 
@@ -31,12 +41,12 @@ function arrayEqual(arr1, arr2) {
  * @param  {Number}   delay         0或者更大的毫秒数。 对于事件回调，大约100或250毫秒（或更高）的延迟是最有用的。
  * @param  {Boolean}  atBegin       可选，默认为false。
  *                                  如果`atBegin`为false或未传入，回调函数则在第一次调用return的防抖函数后延迟指定毫秒调用。
-                                    如果`atBegin`为true，回调函数则在第一次调用return的防抖函数时直接执行
- * @param  {Function} callback      延迟毫秒后执行的函数。`this`上下文和所有参数都是按原样传递的，
- *                                  执行去抖动功能时，，调用`callback`。
- *
- * @return {Function} 新的防抖函数。
- */
+                                 如果`atBegin`为true，回调函数则在第一次调用return的防抖函数时直接执行
+* @param  {Function} callback      延迟毫秒后执行的函数。`this`上下文和所有参数都是按原样传递的，
+*                                  执行去抖动功能时，，调用`callback`。
+*
+* @return {Function} 新的防抖函数。
+*/
 function debounce(delay, atBegin, callback) {
     return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
 };
@@ -46,17 +56,14 @@ function debounce(delay, atBegin, callback) {
  */
 function deepClone(values) {
     var copy;
-
     // Handle the 3 simple types, and null or undefined
     if (null == values || "object" != typeof values) return values;
-
     // Handle Date
     if (values instanceof Date) {
         copy = new Date();
         copy.setTime(values.getTime());
         return copy;
     }
-
     // Handle Array
     if (values instanceof Array) {
         copy = [];
@@ -65,7 +72,6 @@ function deepClone(values) {
         }
         return copy;
     }
-
     // Handle Object
     if (values instanceof Object) {
         copy = {};
@@ -74,7 +80,6 @@ function deepClone(values) {
         }
         return copy;
     }
-
     throw new Error("Unable to copy values! Its type isn't supported.");
 }
 /**
@@ -85,10 +90,7 @@ function deepClone(values) {
  */
 function digitUppercase(n) {
     var fraction = ['角', '分'];
-    var digit = [
-        '零', '壹', '贰', '叁', '肆',
-        '伍', '陆', '柒', '捌', '玖'
-    ];
+    var digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
     var unit = [
         ['元', '万', '亿'],
         ['', '拾', '佰', '仟']
@@ -109,9 +111,7 @@ function digitUppercase(n) {
         }
         s = p.replace(/(零.)*零$/, '').replace(/^$/, '零') + unit[0][i] + s;
     }
-    return head + s.replace(/(零.)*零元/, '元')
-        .replace(/(零.)+/g, '零')
-        .replace(/^整$/, '零元整');
+    return head + s.replace(/(零.)*零元/, '元').replace(/(零.)+/g, '零').replace(/^整$/, '零元整');
 };
 /**
  * @desc   格式化${startTime}距现在的已过时间
@@ -180,13 +180,7 @@ function getExplore() {
     var sys = {},
         ua = navigator.userAgent.toLowerCase(),
         s;
-    (s = ua.match(/rv:([\d.]+)\) like gecko/)) ? sys.ie = s[1]:
-        (s = ua.match(/msie ([\d\.]+)/)) ? sys.ie = s[1] :
-        (s = ua.match(/edge\/([\d\.]+)/)) ? sys.edge = s[1] :
-        (s = ua.match(/firefox\/([\d\.]+)/)) ? sys.firefox = s[1] :
-        (s = ua.match(/(?:opera|opr).([\d\.]+)/)) ? sys.opera = s[1] :
-        (s = ua.match(/chrome\/([\d\.]+)/)) ? sys.chrome = s[1] :
-        (s = ua.match(/version\/([\d\.]+).*safari/)) ? sys.safari = s[1] : 0;
+    (s = ua.match(/rv:([\d.]+)\) like gecko/)) ? sys.ie = s[1]: (s = ua.match(/msie ([\d\.]+)/)) ? sys.ie = s[1] : (s = ua.match(/edge\/([\d\.]+)/)) ? sys.edge = s[1] : (s = ua.match(/firefox\/([\d\.]+)/)) ? sys.firefox = s[1] : (s = ua.match(/(?:opera|opr).([\d\.]+)/)) ? sys.opera = s[1] : (s = ua.match(/chrome\/([\d\.]+)/)) ? sys.chrome = s[1] : (s = ua.match(/version\/([\d\.]+).*safari/)) ? sys.safari = s[1] : 0;
     // 根据关系进行判断
     if (sys.ie) return ('IE: ' + sys.ie)
     if (sys.edge) return ('EDGE: ' + sys.edge)
@@ -205,7 +199,6 @@ function getOS() {
     var userAgent = 'navigator' in window && 'userAgent' in navigator && navigator.userAgent.toLowerCase() || '';
     var vendor = 'navigator' in window && 'vendor' in navigator && navigator.vendor.toLowerCase() || '';
     var appVersion = 'navigator' in window && 'appVersion' in navigator && navigator.appVersion.toLowerCase() || '';
-
     if (/mac/i.test(appVersion)) return 'MacOSX'
     if (/win/i.test(appVersion)) return 'windows'
     if (/linux/i.test(appVersion)) return 'linux'
@@ -219,16 +212,6 @@ function getOS() {
  */
 function getScrollTop() {
     return (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-}
-/**
- * 
- * @desc 判断元素是否有某个class
- * @param {HTMLElement} ele 
- * @param {String} cls 
- * @return {Boolean}
- */
-function hasClass(ele, cls) {
-    return (new RegExp('(\\s|^)' + cls + '(\\s|$)')).test(ele.className);
 }
 /**
  * 
@@ -246,8 +229,7 @@ function isEmail(str) {
  * @return {Boolean}
  */
 function isEmptyObject(obj) {
-    if (!obj || typeof obj !== 'object' || Array.isArray(obj))
-        return false
+    if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return false
     return !Object.keys(obj).length
 }
 /**
@@ -347,8 +329,6 @@ function randomNum(min, max) {
  * @param {HTMLElement} ele 
  * @param {String} cls 
  */
-
-
 function removeClass(ele, cls) {
     if (hasClass(ele, cls)) {
         var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
@@ -364,13 +344,10 @@ function removeCookie(name) {
     // 设置已过期，系统会立刻删除cookie
     setCookie(name, '1', -1);
 }
-var requestAnimFrame = (function () {
-    return window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        function (callback) {
-            window.setTimeout(callback, 1000 / 60);
-        };
+var requestAnimFrame = (function() {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function(callback) {
+        window.setTimeout(callback, 1000 / 60);
+    };
 })();
 /**
  * 
@@ -386,18 +363,17 @@ function scrollTo(to, duration) {
     var diff = to - getScrollTop();
     if (diff === 0) return
     var step = diff / duration * 10;
-    requestAnimationFrame(
-        function () {
-            if (Math.abs(step) > Math.abs(diff)) {
-                setScrollTop(getScrollTop() + diff);
-                return;
-            }
-            setScrollTop(getScrollTop() + step);
-            if (diff > 0 && getScrollTop() >= to || diff < 0 && getScrollTop() <= to) {
-                return;
-            }
-            scrollTo(to, duration - 16);
-        });
+    requestAnimationFrame(function() {
+        if (Math.abs(step) > Math.abs(diff)) {
+            setScrollTop(getScrollTop() + diff);
+            return;
+        }
+        setScrollTop(getScrollTop() + step);
+        if (diff > 0 && getScrollTop() >= to || diff < 0 && getScrollTop() <= to) {
+            return;
+        }
+        scrollTo(to, duration - 16);
+    });
 }
 /**
  * 
@@ -428,20 +404,16 @@ function setScrollTop(value) {
 function stringfyQueryString(obj) {
     if (!obj) return '';
     var pairs = [];
-
     for (var key in obj) {
         var value = obj[key];
-
         if (value instanceof Array) {
             for (var i = 0; i < value.length; ++i) {
                 pairs.push(encodeURIComponent(key + '[' + i + ']') + '=' + encodeURIComponent(value[i]));
             }
             continue;
         }
-
         pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
     }
-
     return pairs.join('&');
 }
 // 数组对比
@@ -460,7 +432,6 @@ function diff_array(arr1, arr2) {
     }
     return arr3;
 }
-
 //笛卡儿积组合
 function descartes(list, specData) {
     var point = {};
@@ -534,37 +505,67 @@ function replaceParamVal(arg, val, url) {
     return url + '\n' + arg + '\n' + val;
 }
 //匹配Email地址
-function isEmail(str){
-    if(!str.match(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)) return "请输入正确的邮箱地址！";
+function isEmail(str) {
+    if (!str.match(/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/)) return "请输入正确的邮箱地址！";
 }
-
 //只能输入数字[0-9]
-function isDigits(str){
-    if(!str.match(/^\d+$/)) return "请输入数字！";
+function isDigits(str) {
+    if (!str.match(/^\d+$/)) return "请输入数字！";
 }
-
 //匹配mobile
-function isMobile(str){
-    if(!str.match(/^((\(\d{2,3}\))|(\d{3}\-))?((13\d{9})|(15\d{9})|(18\d{9}))$/)) return "请输入正确的手机号码格式！";
+function isMobile(str) {
+    if (!str.match(/^((\(\d{2,3}\))|(\d{3}\-))?((13\d{9})|(15\d{9})|(18\d{9}))$/)) return "请输入正确的手机号码格式！";
 }
-
 //以字母开头
-function isFirstEnglish(str){
-    if(!str.match(/^[a-zA-Z]/)) return "必须以字母为开头！";
+function isFirstEnglish(str) {
+    if (!str.match(/^[a-zA-Z]/)) return "必须以字母为开头！";
 }
-
 //判断是否为合法字符(a-zA-Z0-9-_)字母，数字，下划线
-function isRightfulString(str){
-    if(str==null||str=="") return false;
-    var result=str.match(/^[A-Za-z0-9_-]+$/);
-    if(result==null)return false;
+function isRightfulString(str) {
+    if (str == null || str == "") return false;
+    var result = str.match(/^[A-Za-z0-9_-]+$/);
+    if (result == null) return false;
     return true;
 }
-
 //匹配身份证号码
-function istrCard(str){
-    var aCity = { 11: "北京", 12: "天津", 13: "河北", 14: "山西", 15: "内蒙古", 21: "辽宁", 22: "吉林", 23: "黑龙江 ", 31: "上海", 32: "江苏", 33: "浙江", 34: "安徽", 35: "福建", 36: "江西", 37: "山东", 41: "河南", 42: "湖北 ", 43: "湖南", 44: "广东", 45: "广西", 46: "海南", 50: "重庆", 51: "四川", 52: "贵州", 53: "云南", 54: "西藏 ", 61: "陕西", 62: "甘肃", 63: "青海", 64: "宁夏", 65: "新疆", 71: "台湾", 81: "香港", 82: "澳门", 91: "国外 " }
-
+function istrCard(str) {
+    var aCity = {
+        11: "北京",
+        12: "天津",
+        13: "河北",
+        14: "山西",
+        15: "内蒙古",
+        21: "辽宁",
+        22: "吉林",
+        23: "黑龙江 ",
+        31: "上海",
+        32: "江苏",
+        33: "浙江",
+        34: "安徽",
+        35: "福建",
+        36: "江西",
+        37: "山东",
+        41: "河南",
+        42: "湖北 ",
+        43: "湖南",
+        44: "广东",
+        45: "广西",
+        46: "海南",
+        50: "重庆",
+        51: "四川",
+        52: "贵州",
+        53: "云南",
+        54: "西藏 ",
+        61: "陕西",
+        62: "甘肃",
+        63: "青海",
+        64: "宁夏",
+        65: "新疆",
+        71: "台湾",
+        81: "香港",
+        82: "澳门",
+        91: "国外 "
+    }
     var iSum = 0;
     var info = "";
     str = str.replace(/x$/i, "a");
@@ -576,76 +577,64 @@ function istrCard(str){
     if (iSum % 11 != 1) return "非法证号";
     //str.substr(16, 1) % 2 ? "男" : "女"//获取身份证性别
 }
-
 //字符串长度
-function israngeLength(str,para){
+function israngeLength(str, para) {
     var paraName = para.split(",");
-    if(str.length<parseInt(paraName[0])||str.length>parseInt(paraName[1])){
-        return "字符长度必须是"+paraName[0]+"到"+paraName[1]+"之间！";
+    if (str.length < parseInt(paraName[0]) || str.length > parseInt(paraName[1])) {
+        return "字符长度必须是" + paraName[0] + "到" + paraName[1] + "之间！";
     }
 }
-
 //数值范围0-10
-function isnumRange(str,para){
+function isnumRange(str, para) {
     var paraName = para.split(",");
-    if(str<paraName[0]||str>paraName[1]){
-        return "","数值范围必须是"+paraName[0]+"到"+paraName[1]+"之间！";
+    if (str < paraName[0] || str > paraName[1]) {
+        return "", "数值范围必须是" + paraName[0] + "到" + paraName[1] + "之间！";
     }
 }
-
 //URL
-function isUrl(str){
-    if(!str.match(/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\’:+!]*([^<>\"])*$/)){
+function isUrl(str) {
+    if (!str.match(/^http:\/\/[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\’:+!]*([^<>\"])*$/)) {
         return "请输入正确的url地址,必须以http://开头！"
     }
 }
-
 //整数
-function isInteger(str){
-    if(!str.match(/^[-\+]?\d+$/)) return "请输入整数！";
+function isInteger(str) {
+    if (!str.match(/^[-\+]?\d+$/)) return "请输入整数！";
 }
-
 //浮点数
-function isDoubleNum(str){
-    if(!str.match(/^[-\+]?\d+(\.\d+)?$/)) return "请输入浮点数！";
+function isDoubleNum(str) {
+    if (!str.match(/^[-\+]?\d+(\.\d+)?$/)) return "请输入浮点数！";
 }
-
 //字符串最大长度
-function isMaxLength(str,para){
-    if(str.length>para) return "不能超过"+para+"字符！";
+function isMaxLength(str, para) {
+    if (str.length > para) return "不能超过" + para + "字符！";
 }
-
 //字符串最小长度
-function isMinLength(str,para){
-    if(str.length<para) return "不能少于"+para+"字符！";
+function isMinLength(str, para) {
+    if (str.length < para) return "不能少于" + para + "字符！";
 }
-
 //必须输入英文
-function isEnglish(str){
-    if(!str.match(/^[A-Za-z]+$/)) return "请输入英文，不区分大小写！";
+function isEnglish(str) {
+    if (!str.match(/^[A-Za-z]+$/)) return "请输入英文，不区分大小写！";
 }
-
 //必须输入中文
-function isChineseChar(str){
-    if(!str.match(/^[\u0391-\uFFE5]+$/)) return "请输入中文！";
+function isChineseChar(str) {
+    if (!str.match(/^[\u0391-\uFFE5]+$/)) return "请输入中文！";
 }
-
 //判断是否包含中英文特殊字符，除英文"-_"字符外
-function isSpecialChar(str){
+function isSpecialChar(str) {
     var reg = RegExp(/[(\ )(\`)(\~)(\!)(\@)(\#)(\$)(\%)(\^)(\&)(\*)(\()(\))(\+)(\=)(\|)(\{)(\})(\')(\:)(\;)(\')(',)(\[)(\])(\.)(\<)(\>)(\/)(\?)(\~)(\！)(\@)(\#)(\￥)(\%)(\…)(\&)(\*)(\（)(\）)(\—)(\+)(\|)(\{)(\})(\【)(\】)(\‘)(\；)(\：)(\”)(\“)(\’)(\。)(\，)(\、)(\？)]+/);
-    if(reg.test(str)) return "不能输入特殊字符！";
+    if (reg.test(str)) return "不能输入特殊字符！";
 }
-
 //日期验证 2015-9-6
-function isDate1(str,para){
+function isDate1(str, para) {
     var dateformat = /^[0-9]{4}-[0-1]?[0-9]{1}-[0-3]?[0-9]{1}$/;
-    if(!dateformat.test(str)) return "请输入正确的日期格式！"
+    if (!dateformat.test(str)) return "请输入正确的日期格式！"
 }
-
 //日期验证 2015/9/6
-function isDate2(str,para){
+function isDate2(str, para) {
     var dateformat = /^[0-9]{4}[/][0-1]?[0-9]{1}[/][0-3]?[0-9]{1}$/;
-    if(!dateformat.test(str)) return "请输入正确的日期格式！"
+    if (!dateformat.test(str)) return "请输入正确的日期格式！"
 }
 /**
  * 解析URL参数
@@ -653,21 +642,58 @@ function isDate2(str,para){
  * @return Object {id: 12345, a:'b'}
  */
 function urlParse() {
-  let search = window.location.search;
-  let obj = {};
-  // 正则
-  let reg = /[?&][^?&]+=[^?&]+]/g;
-  // match方法可以在字符串内检索指定的值，返回一个或多个正则表达式的匹配
-  let arr = search.match(reg); // 返回 ["?id=12345", "&a=b"]
-  if (arr) {
-    arr.forEach((item) => {
-      let tempArr = item.substring(1).split('=');
-      // decodeURIComponent() 函数可对 dencodeURIComponent() 函数编码的 URI 进行解码。
-      let key = decodeURIComponent(tempArr[0]);
-      let value = decodeURIComponent(tempArr[1]);
+    let search = window.location.search;
+    let obj = {};
+    // 正则
+    let reg = /[?&][^?&]+=[^?&]+]/g;
+    // match方法可以在字符串内检索指定的值，返回一个或多个正则表达式的匹配
+    let arr = search.match(reg); // 返回 ["?id=12345", "&a=b"]
+    if (arr) {
+        arr.forEach((item) => {
+            let tempArr = item.substring(1).split('=');
+            // decodeURIComponent() 函数可对 dencodeURIComponent() 函数编码的 URI 进行解码。
+            let key = decodeURIComponent(tempArr[0]);
+            let value = decodeURIComponent(tempArr[1]);
+            obj[key] = value;
+        });
+    }
+    return obj;
+}
 
-      obj[key] = value;
-    });
-  }
-  return obj;
+function ajax() {
+    var xmlhttp;
+    if (window.XMLHttpRquest) {
+        xmlhttp = new XMLHttpRquest();
+    } else {
+        xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+    }
+    xmlhttp.open('GET', url, true);
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyStat == 4 && xmlhttp.status == 200) {
+            var test = xmlhttp.responseText;
+        }
+    }
+}
+
+function inherit(obj) {
+    if (obj == null) {
+        throw TypeError();
+    }
+    if (Object.create) {
+        return Object.create(obj);
+    }
+    var t = typeof obj;
+    if (t !== "object" && t !== "function") {
+        throw TypeError();
+    }
+
+    function f() {};
+    f.prototype = obj;
+    return new f();
+}
+
+function classof(o) {
+    if (o === null) return "Null";
+    if (o === "undefined") return "Undefined";
+    return Object.prototype.toString.call(o).slice(8, -1);
 }

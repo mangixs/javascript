@@ -1,13 +1,16 @@
-Number.isInteger()//用来判断一个值是否为整数。
-Math.trunc()//方法用于去除一个数的小数部分，返回整数部分。
-'use strict';//严格模式。
-[1,2,3].map(function (x) {
-  return x * x;
+Number.isInteger() //用来判断一个值是否为整数。
+Math.trunc() //方法用于去除一个数的小数部分，返回整数部分。
+'use strict'; //严格模式。
+[1, 2, 3].map(function(x) {
+    return x * x;
 }); //循环数组
-for (let [index, elem] of ['a', 'b'].entries()) {
-  console.log(index, elem);
+[1, 2, 3].forEach((x) => {
+
+})
+for (let [index, elem] of['a', 'b'].entries()) {
+    console.log(index, elem);
 } //遍历数组
-Array.of()//方法用于将一组值，转换为数组。
+Array.of() //方法用于将一组值，转换为数组。
 
 // ES6 一共有5种方法可以遍历对象的属性。
 

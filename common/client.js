@@ -1,4 +1,4 @@
-var client = function () {
+var client = function() {
     // 呈现引擎
     var engine = {
         ie: 0,
@@ -6,11 +6,9 @@ var client = function () {
         webkit: 0,
         khtml: 0,
         opera: 0,
-
         // 完整的版本号
         ver: null
     };
-
     // 浏览器
     var browser = {
         // 主要浏览器
@@ -20,17 +18,14 @@ var client = function () {
         konq: 0,
         opera: 0,
         chrome: 0,
-
         // 具体的版本号
         ver: null
     };
-
     // 平台、设备和操作系统
     var system = {
         win: false,
         mac: false,
         xll: false,
-
         // 移动设备
         iphone: false,
         ipod: false,
@@ -39,12 +34,10 @@ var client = function () {
         android: false,
         nokiaN: false,
         winMobile: false,
-
         // 游戏系统
         wii: false,
         ps: false
     };
-
     // 检测呈现引擎和浏览器
     var ua = navigator.userAgent;
     if (window.opera) {
@@ -53,7 +46,6 @@ var client = function () {
     } else if (/AppleWebKit\/(\S+)/.test(ua)) {
         engine.ver = RegExp["$1"];
         engine.webkit = parseFloat(engine.ver);
-
         // 确定是Chrome还是Safari
         if (/Chrome\/(\S+)/.test(ua)) {
             browser.ver = RegExp["$1"];
@@ -73,7 +65,6 @@ var client = function () {
             } else {
                 safariVersion = 2;
             }
-
             browser.safari = browser.ver = safariVersion;
         }
     } else if (/KHTML\/(\S+)/.test(ua) || /Konqueror\/([^;]+)/.test(ua)) {
@@ -82,7 +73,6 @@ var client = function () {
     } else if (/rv:([^\)]+)\) Gecko\/\d{8}/.test(ua)) {
         engine.ver = RegExp["$1"];
         engine.gecko = parseFloat(engine.ver);
-
         // Firefox?
         if (/Firefox\/(\S+)/.test(ua)) {
             browser.ver = RegExp["$1"];
@@ -92,13 +82,11 @@ var client = function () {
         engine.ver = browser.ver = RegExp["$1"];
         engine.ie = browser.ie = parseFloat(engine.ver);
     }
-
     // 检测平台
     var p = navigator.platform;
     system.win = p.indexOf("Win") == 0;
     system.mac = p.indexOf("Mac") == 0;
     system.xll = (p == "Xll") || (p.indexOf("Linux") == 0);
-
     // 检测Windows操作系统
     if (system.win) {
         if (/Win(?:dows )?([^do]{2})\s?(\d+\.\d+)?/.test(ua)) {
@@ -130,13 +118,11 @@ var client = function () {
             }
         }
     }
-
     // 移动设备
     system.iphone = ua.indexOf("iPhone") > -1;
     system.ipod = ua.indexOf("iPod") > -1;
     system.ipad = ua.indexOf("iPad") > -1;
     system.nokiaN = ua.indexOf("NokiaN") > -1;
-
     // windows mobile
     if (system.win == "CE") {
         system.winMobile = system.win;
@@ -146,7 +132,6 @@ var client = function () {
             window.winMobile = parseFloat(RegExp["$1"]);
         }
     }
-
     // ios
     if (system.mac && (ua.indexOf("Mobile") > -1)) {
         if (/CPU (?:iPhone )?OS (\d+_\d+)/.test(ua)) {
@@ -155,16 +140,13 @@ var client = function () {
             system.ios = 2; // 检测不到
         }
     }
-
     // android
     if (/Android (\d+\.\d+)/.test(ua)) {
         system.android = parseFloat(RegExp["$1"]);
     }
-
     // 游戏系统
     system.wii = ua.indexOf("Wii") > -1;
     system.ps = /playstation/i.test(ua);
-
     return {
         engine: engine,
         browser: browser,
