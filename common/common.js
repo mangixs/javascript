@@ -714,3 +714,31 @@ function urlArgs() {
     }
     return args;
 }
+//js秒转天时分
+let card = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/; //十八位
+let fifteen = /^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$/; //十五位
+function timeStamp(second_time) {
+
+    var time = parseInt(second_time) + "秒";
+    if (parseInt(second_time) > 60) {
+
+        var second = parseInt(second_time) % 60;
+        var min = parseInt(second_time / 60);
+        time = min + "分" + second + "秒";
+
+        if (min > 60) {
+            min = parseInt(second_time / 60) % 60;
+            var hour = parseInt(parseInt(second_time / 60) / 60);
+            time = hour + "小时" + min + "分" + second + "秒";
+
+            if (hour > 24) {
+                hour = parseInt(parseInt(second_time / 60) / 60) % 24;
+                var day = parseInt(parseInt(parseInt(second_time / 60) / 60) / 24);
+                time = day + "天" + hour + "小时" + min + "分" + second + "秒";
+            }
+        }
+
+    }
+
+    return time;
+}
